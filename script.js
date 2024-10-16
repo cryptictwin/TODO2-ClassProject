@@ -155,11 +155,19 @@ todoRef.on('value', (snapshot) => {
     // Delete the todo item from Firebase
     todoRef.child(todoKey).remove();
   });
+
+  // Append all created elements to the list item
+  li.appendChild(todoContent);
+  if(todoItem.completed) {
+    li.appendChild(undoBtn) // Add undo button only if task is completed
+  }
+  else {
+    li.appendChild(completeBtn) // Add complete button if task is not completed
+  }
+  li.appendChild(editBtn); // Add edit button
+  li.appendChild(deleteBtn); // Add delete button
+  todoList.appendChild(li); // Append the list item to the list (UI)
 });
-
-
-
-
 
 
 
