@@ -170,6 +170,22 @@ todoRef.on('value', (snapshot) => {
 });
 
 
+// Event Listener for search functionality
+searchInput.addEventListener('input', () => {
+  const filter = searchInput.value.toLowerCase;
+  const todos = document.querySelectorAll("#todo-list li")
+  todos.forEach(todo => {
+    const text = todo.querySelector('span').textContent.toLowerCase();
+    if(text.includes(filter)) {
+      todo.style.display = "";
+    }
+    else {
+      todo.style.display = "none";
+    }
+  });
+});
+
+
 
 
 
