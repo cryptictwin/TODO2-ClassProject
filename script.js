@@ -95,7 +95,7 @@ todoRef.on('value', (snapshot) => {
     }
     todoContent.appendChild(todoTextSpan);
 
-    // Create delete button
+    // Create an edit button
     const editBtn = document.createElement('i');
     editBtn.classList.add('fas', "fa-edit", 'edit-btn');
     editBtn.addEventListener('click', () => {
@@ -134,19 +134,28 @@ todoRef.on('value', (snapshot) => {
         complete:!todoItem.completed,
         date: new Date().toLocaleDateString()
       });
+    });
+
+    // Create an undo button for completed tasks
+    const undoBtn = document.createElement('i');
+    undoBtn.classList.add('fas', "fa-undo", 'undo-btn');
+    undoBtn.addEventListener('click', () => {
+      e.stopPropagation() // Prevent click from triggering other actions
+      // Set the task as incomplete
+      todoRef.child(todoKey).update({
+        complete: false
+      })
+    });
   });
-
-  // Create an undo button for completed tasks
-  const undoBtn = document.createElement('i');
-  undoBtn.classList.add('fas', "fa-undo", 'undo-btn');
-  e.stopPropagation() // Prevent click from triggering other actions
-  // Set the task as incomplete
-  todoRef.child(todoKey).update({
-    complete: false
-  })
+  // Create a delete button
+  const deleteBtn = document.createElement('i');
+  deleteBtn.classList.add('fas', "fa-trash-alt", 'delete-btn');
+  deleteBtn.addEventListener('click', (e) => {
+    e.stopPropagation(); // Prevent click from triggering other actions
+    // Delete the todo item from Firebase
+    todoRef.child(todoKey).remove();
+  });
 });
-
-
 
 
 
