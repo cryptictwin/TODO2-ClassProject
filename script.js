@@ -116,11 +116,43 @@ todoRef.on('value', (snapshot) => {
             text: updatedText,
             date: new Date().toLocaleDateString()
           })
+        }
         else {
-
           // Revert to original text if no valid input
+          todoContent.replaceChild(todoTextSpan, editInput);
         }
       });
-    })
+    });
+
+    // Create a complete button
+    const completeButton = document.createElement('i');
+    completeButton.classList.add('fas', "fa-check", 'complete-btn');
+    completeButton.addEventListener('click', () => {
+      e.stopPropagation(); // Prevent click from triggering other actions
+      // Update the todo's completion status and date in Firebase
+      todoRef.child(todoKey).update({
+        complete:!todoItem.completed,
+        date: new Date().toLocaleDateString()
+      });
   });
+
+  // Create an undo button for completed tasks
+  const undoBtn = document.createElement('i');
+  undoBtn.classList.add('fas', "fa-undo", 'undo-btn');
+  e.stopPropagation() // Prevent click from triggering other actions
+  // Set the task as incomplete
+  todoRef.child(todoKey).update({
+    complete: false
+  })
 });
+
+
+
+
+
+
+
+
+
+
+
